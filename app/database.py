@@ -1,8 +1,15 @@
+import os
+from dotenv import load_dotenv
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-# SQLite DB file will be created in project root as gkk_backend.db
-DATABASE_URL = "sqlite+aiosqlite:///./gkk_backend.db"
+load_dotenv()
+
+# PostgreSQL connection URL loaded from .env
+DATABASE_URL = os.getenv(
+    "DATABASE_URL",
+    "postgresql+asyncpg://postgres:postgres@localhost:5432/gkk_backend",
+)
 
 # Engine: the actual connection to the DB
 engine = create_async_engine(DATABASE_URL, echo=True)
